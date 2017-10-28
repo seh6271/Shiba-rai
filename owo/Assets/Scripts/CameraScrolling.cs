@@ -7,6 +7,7 @@ public class CameraScrolling : MonoBehaviour {
     public float scollSpeed;
     public GameObject player;
     public float raise;
+    public float check;
 
     public Transform target;
     public float offset;
@@ -30,8 +31,9 @@ public class CameraScrolling : MonoBehaviour {
 
     public void Follow()
     {
-            raise = target.position.y - transform.position.y;
-        if (raise < .01 || raise > .01)
+        raise = target.position.y - gameObject.transform.position.y;
+        check = raise + 11;
+        if (Mathf.Abs(raise) - 11 < -.5 || Mathf.Abs(raise) - 11 > .5)
         {
             transform.Translate(0, offset + (raise * 3 * Time.deltaTime), 0);
         }
