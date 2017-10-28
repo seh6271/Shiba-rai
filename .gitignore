@@ -33,5 +33,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-git add .Library/
-git add .Temp/
+git add *.Library/
+git add *.Temp/
