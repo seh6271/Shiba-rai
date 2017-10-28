@@ -50,7 +50,6 @@ public class PlayerMovement : MonoBehaviour {
         if(Input.GetKey(KeyCode.D))
         {
             currentSpeed = forwardSpeed;
-            Debug.Log("right");
         }
         else if(Input.GetKey(KeyCode.A))
         {

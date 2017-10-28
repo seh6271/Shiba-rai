@@ -6,11 +6,10 @@ public class CameraScrolling : MonoBehaviour {
 
     public float scollSpeed;
     public GameObject player;
-    private float raise;
+    public float raise;
 
-    public float dampTime = 0.15f;
-    private Vector3 velocity = Vector3.zero;
     public Transform target;
+    public float offset;
 
     // Use this for initialization
     void Start () {
@@ -31,10 +30,10 @@ public class CameraScrolling : MonoBehaviour {
 
     public void Follow()
     {
-        if (target)
-        {
             raise = target.position.y - transform.position.y;
-            transform.Translate(0, raise * 3 * Time.deltaTime, 0);
+        if (raise < .01 || raise > .01)
+        {
+            transform.Translate(0, offset + (raise * 3 * Time.deltaTime), 0);
         }
     }
 }
