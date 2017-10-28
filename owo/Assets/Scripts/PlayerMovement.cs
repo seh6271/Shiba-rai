@@ -9,10 +9,17 @@ public class PlayerMovement : MonoBehaviour {
 
     public float velocity;
     public float walkSpeed;
+    private float currentSpeed;
+    private float forwardSpeed;
+    private float backwardsSpeed;
+    public float increment;
 
 	// Use this for initialization
 	void Start () {
-        rBody = gameObject.GetComponent<Rigidbody2D>();        
+        rBody = gameObject.GetComponent<Rigidbody2D>();
+        forwardSpeed = walkSpeed + increment;
+        backwardsSpeed = walkSpeed - increment;
+        currentSpeed = walkSpeed;
     }
 	
 	// Update is called once per frame
@@ -20,17 +27,39 @@ public class PlayerMovement : MonoBehaviour {
 
         ConstantMovement();
 
-        //jump check
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            rBody.AddRelativeForce(Vector2.up * rBody.mass * (velocity * 200) * Time.deltaTime);            
-        }       
+        CheckInput();
+
+
     }
 
     public void ConstantMovement()
     {
-        transform.Translate(walkSpeed * Time.deltaTime, 0, 0);
+        transform.Translate(currentSpeed * Time.deltaTime, 0, 0);
         //rBody.MovePosition((rBody.transform.position + new Vector3(walkSpeed, 0,0)));
+    }
+
+    public void CheckInput()
+    {
+        //jump check
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            rBody.AddRelativeForce(Vector2.up * rBody.mass * (velocity * 200) * Time.deltaTime);
+        }
+
+        //walk check
+        if(Input.GetKey(KeyCode.D))
+        {
+            currentSpeed = forwardSpeed;
+            Debug.Log("right");
+        }
+        else if(Input.GetKey(KeyCode.A))
+        {
+            currentSpeed = backwardsSpeed;
+        }
+        else
+        {
+            currentSpeed = walkSpeed;
+        }
     }
 
     
