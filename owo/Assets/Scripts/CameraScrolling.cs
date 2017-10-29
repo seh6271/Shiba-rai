@@ -30,12 +30,9 @@ public class CameraScrolling : MonoBehaviour {
     }
 
     public void Follow()
-    {
-        raise = target.position.y - gameObject.transform.position.y;
-        check = raise + 11;
-        if (Mathf.Abs(raise) - 11 < -.5 || Mathf.Abs(raise) - 11 > .5)
-        {
-            transform.Translate(0, offset + (raise * 3 * Time.deltaTime), 0);
-        }
+    {        
+		Vector3 pos = transform.position;
+		pos.y = target.position.y + 11;
+		transform.position = pos;
     }
 }
