@@ -34,7 +34,7 @@ public class EnemyMove : MonoBehaviour {
             stopTimer = 0;
             cooldown = 0.0f;
         }
-        if (stopTimer == 60)
+        if (stopTimer == 20)
             currentSpeed = walkSpeed;
         stopTimer++;
 
