@@ -4,7 +4,7 @@ using UnityEngine;
 
 //controls players movement
 public class PlayerMovement : MonoBehaviour {
-  
+
     private Rigidbody2D rBody;
 
     public float velocity;
@@ -18,12 +18,12 @@ public class PlayerMovement : MonoBehaviour {
     private float crouchBackwardSpeed;
 
     public static int animNum;
-    private bool police;
+    public bool jumping;
 
     private Animator animator;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         rBody = gameObject.GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
         forwardSpeed = walkSpeed + increment;
@@ -33,34 +33,20 @@ public class PlayerMovement : MonoBehaviour {
         crouchBackwardSpeed = crouchSpeed - (increment / 3f) - 5;
         currentSpeed = walkSpeed;
         animNum = 0;
-        police = true;
+        jumping = false;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
 
         if (rBody.velocity.y == 0)
-        {
-            animNum = 0;
-            animator.SetInteger("Action", animNum);
+        {            
+            jumping = false;
         }
-
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        else
         {
-            police = !police;
+            jumping = true;
         }
-
-        if(!police && animNum < 3)
-        {
-            animNum += 3;            
-        }
-        else if(police && animNum > 2)
-        {
-            animNum -= 3;
-        }
-
-        animator.SetInteger("Action", animNum);
 
         ConstantMovement();
 
@@ -76,53 +62,53 @@ public class PlayerMovement : MonoBehaviour {
 
     public void CheckInput()
     {
+        Crouch();
 
+        Jump();
+
+        //walk check
+        if (Input.GetKey(KeyCode.D))
+        {
+            currentSpeed = forwardSpeed;            
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            currentSpeed = backwardsSpeed;           
+        }
+    }
+
+    public void Crouch()
+    {
+        if (Input.GetKey(KeyCode.S))
+        {           
+            currentSpeed = crouchSpeed;
+        }
+        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+        {
+            currentSpeed = crouchForwardSpeed;
+        }
+        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+        {
+            currentSpeed = crouchBackwardSpeed;            
+        }
+        else
+        {
+            currentSpeed = walkSpeed;
+        }
+    }
+
+    public void Jump()
+    {
         //jump check
         if (Input.GetKeyDown(KeyCode.W) && (rBody.velocity.y < .5 && rBody.velocity.y > -.3))
         {
             rBody.AddRelativeForce(Vector2.up * rBody.mass * (velocity * 200) * Time.deltaTime);
-            animNum = 1;
-            animator.SetInteger("Action", animNum);
+            //jumping = true;
         }
-        //walk check
-        if (Input.GetKey(KeyCode.S))
-        { 
-            animNum = 2;
-            animator.SetInteger("Action", animNum);
-            currentSpeed = crouchSpeed;            
-            return;
-        }      
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+        else
         {
-            currentSpeed = crouchForwardSpeed;
-            animNum = 2;
-            animator.SetInteger("Action", animNum);
-            return;
+            currentSpeed = walkSpeed;
         }
-        if (Input.GetKey(KeyCode.D))
-        {
-            currentSpeed = forwardSpeed;
-            animNum = 0;
-            animator.SetInteger("Action", animNum);
-            return;
-        }
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
-        {
-            currentSpeed = crouchBackwardSpeed;
-            animNum = 2;
-            animator.SetInteger("Action", animNum);
-            return;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            currentSpeed = backwardsSpeed;
-            animNum = 0;
-            animator.SetInteger("Action", animNum);
-            return;
-        }        
-
-        currentSpeed = walkSpeed;
-        
     }
 
     
