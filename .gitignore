@@ -33,5 +33,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-git add *.owo/Library/
-git add *.owo/Temp/
+git rm -r --cached *.owo/Library/
+git rm -r --cached *.owo/Temp/
