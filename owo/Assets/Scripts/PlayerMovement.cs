@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour {
 	void Start () {
         rBody = gameObject.GetComponent<Rigidbody2D>();
         forwardSpeed = walkSpeed + increment;
-        backwardsSpeed = walkSpeed - increment - 2;
+        backwardsSpeed = walkSpeed - increment - 5;
         currentSpeed = walkSpeed;
     }
 	
