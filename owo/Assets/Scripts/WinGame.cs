@@ -19,7 +19,7 @@ public class WinGame : MonoBehaviour
     {
         if (player.transform.position.x > enemy.transform.position.x-5 && player.transform.position.x < enemy.transform.position.x + 5 &&
             player.transform.position.y > enemy.transform.position.y - 5 && player.transform.position.y < enemy.transform.position.y + 5)
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(3);
 
 	}
 }
