@@ -35,13 +35,12 @@ public class PlayerMovement : MonoBehaviour {
     public void ConstantMovement()
     {
         transform.Translate(currentSpeed * Time.deltaTime, 0, 0);
-        //rBody.MovePosition((rBody.transform.position + new Vector3(walkSpeed, 0,0)));
     }
 
     public void CheckInput()
     {
         //jump check
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) && (rBody.velocity.y < 1 && rBody.velocity.y > -.5))
         {
             rBody.AddRelativeForce(Vector2.up * rBody.mass * (velocity * 200) * Time.deltaTime);
         }
